@@ -163,7 +163,7 @@ function toggleVisibility(hole) {
  *
  */
 function updateScore() {
-  points += 1;
+  points++;
   score.textContent = points;
 
   return points;
@@ -224,9 +224,9 @@ function whack(event) {
  * Adds the 'click' event listeners to the moles. See the instructions
  * for an example on how to set event listeners using a for loop.
  */
+
 function setEventListeners() {
   moles.forEach((mole) => mole.addEventListener("click", whack));
-
   return moles;
 }
 
@@ -238,6 +238,7 @@ function setEventListeners() {
  */
 function setDuration(duration) {
   time = duration;
+  timerDisplay.textContent = time;
   return time;
 }
 
@@ -250,6 +251,8 @@ function setDuration(duration) {
 function stopGame() {
   // stopAudio(song);  //optional
   clearInterval(timer);
+  startButton.disabled = false;
+  startButton.textContent = "START";
   return "game stopped";
 }
 
@@ -260,8 +263,13 @@ function stopGame() {
  *
  */
 function startGame() {
-  setDuration(10);
+  startButton.disabled = true;
+  startButton.textContent = "Whack em!";
+  setEventListeners();
+  clearScore();
+  setDuration(5);
   showUp();
+  startTimer();
   return "game started";
 }
 
