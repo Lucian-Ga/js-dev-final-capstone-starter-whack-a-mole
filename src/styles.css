@@ -26,8 +26,12 @@ h2 {
 }
 
 #start {
-    text-align: center;
+    text-align: right;
     font-size: 30px;
+}
+
+#startButtonContainer {
+  text-align: center 
 }
 
 #timer{
