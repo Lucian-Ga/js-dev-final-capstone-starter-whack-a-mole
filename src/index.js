@@ -3,14 +3,23 @@ const moles = document.querySelectorAll(".mole");
 const startButton = document.querySelector("#start");
 const score = document.querySelector("#score");
 const timerDisplay = document.querySelector("#timer");
-const backgroundSong = new Audio("../assets/molesong.mp3");
-const hitSound = new Audio("../assets/hit.mp3");
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
+let backgroundSong = document.getElementById("background_song");
+let hitSound = document.getElementById("hit_sound");
+
+/**
+ * Takes in audio file and plays it from start. This helps refresh the sound start/stop
+ * when having fast continuious triggers on click
+ */
+function playSoundFromStart(audio) {
+  audio.currentTime = 0;
+  audio.play();
+}
 
 /**
  * Generates a random integer within a range.
@@ -68,8 +77,9 @@ function chooseHole(holes) {
   let index = randomInteger(0, 8);
   let hole = holes[index];
   if (hole === lastHole) {
-    chooseHole(holes);
-  } else if ((lastHole = hole)) {
+    return chooseHole(holes);
+  } else {
+    lastHole = hole;
     return hole;
   }
 }
@@ -217,7 +227,7 @@ function startTimer() {
  */
 function whack(event) {
   updateScore();
-  hitSound.play();
+  playSoundFromStart(hitSound);
   return points;
 }
 
