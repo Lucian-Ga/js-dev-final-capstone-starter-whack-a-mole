@@ -3,6 +3,8 @@ const moles = document.querySelectorAll(".mole");
 const startButton = document.querySelector("#start");
 const score = document.querySelector("#score");
 const timerDisplay = document.querySelector("#timer");
+const backgroundSong = new Audio("../assets/molesong.mp3");
+const hitSound = new Audio("../assets/hit.mp3");
 
 let time = 0;
 let timer;
@@ -93,13 +95,17 @@ function chooseHole(holes) {
  *
  */
 function gameOver() {
+  // if (time > 0) {
+  //   timeoutId = showUp();
+  //   return timeoutId;
+  // } else {
+  //   gameStopped = stopGame();
+  //   return gameStopped;
+  // }
   if (time > 0) {
-    timeoutId = showUp();
-    return timeoutId;
-  } else {
-    gameStopped = stopGame();
-    return gameStopped;
+    return showUp();
   }
+  return stopGame();
 }
 
 /**
@@ -211,6 +217,7 @@ function startTimer() {
  */
 function whack(event) {
   updateScore();
+  hitSound.play();
   return points;
 }
 
@@ -244,8 +251,8 @@ function setDuration(duration) {
  *
  */
 function stopGame() {
-  // stopAudio(song);  //optional
   clearInterval(timer);
+  backgroundSong.pause();
   startButton.disabled = false;
   startButton.textContent = "START";
   return "game stopped";
@@ -263,6 +270,7 @@ function startGame() {
   setEventListeners();
   clearScore();
   setDuration(5);
+  backgroundSong.play();
   showUp();
   startTimer();
   return "game started";
